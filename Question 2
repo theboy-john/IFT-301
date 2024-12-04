@@ -1,0 +1,43 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Data dictionary
+data = {
+    'Student': list(range(1, 21)),
+    'Sex': ['F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M'],
+    'Height': [175, 158, 166, 175, 160, 165, 166, 170, 170, 172, 184, 182, 180, 191, 189, 181, 180, 170, 176, 185],
+    'Breath_Hold_Time': [22.22, 30.57, 17.47, 22.39, 26.90, 36.85, 27.33, 29.55, 13.87, 34.66, 60.75, 67.41, 42.19, 59.74, 52.64, 43.37, 73.27, 59.09, 51.15, 58.32]
+}
+
+# Convert to DataFrame
+df = pd.DataFrame(data)
+
+# Save to CSV
+df.to_csv('breath_hold_study.csv', index=False)
+
+
+plt.figure(figsize=(10, 6))
+plt.hist(df['Breath_Hold_Time'], bins=10, color='skyblue', edgecolor='black', alpha=0.7)
+plt.title('Histogram of Breath Holding Times')
+plt.xlabel('Breath Hold Time (seconds)')
+plt.ylabel('Frequency')
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
+
+# Separate data by sex
+male_times = df[df['Sex'] == 'M']['Breath_Hold_Time']
+female_times = df[df['Sex'] == 'F']['Breath_Hold_Time']
+
+# Plot
+plt.figure(figsize=(10, 6))
+
+plt.plot(male_times, ['M']*len(male_times), 'bo', label='Male')
+plt.plot(female_times, ['F']*len(female_times), 'ro', label='Female')
+
+plt.title('Side-by-Side Dot Plot of Breath Holding Times by Sex')
+plt.xlabel('Breath Hold Time (seconds)')
+plt.yticks(['M', 'F'])
+plt.legend()
+plt.grid(axis='x', linestyle='--', alpha=0.7)
+plt.show()
+
