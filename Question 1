@@ -1,0 +1,15 @@
+import matplotlib.pyplot as plt
+
+categories = ['Spinach', 'Sausage', 'Prawns', 'Pineapple', 'Mushroom']
+values =[0.28, 0.16, 0.07, 0.28, 0.16]
+
+
+plt.barh(categories, values, color='purple', edgecolor='black', alpha=0.7)
+
+plt.title('Bar Chart')
+plt.xlabel('Proportion of Total')
+plt.ylabel('Vegetables')
+
+plt.grid(axis='x', alpha=0.7)
+
+plt.show()
