@@ -1,0 +1,50 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load the data
+data = {
+    'Condition': ['With music', 'With music', 'With music', 'With music', 'With music',
+                  'Without music', 'Without music', 'Without music', 'Without music', 'Without music'],
+    'Measurement1': [304, 317, 332, 299, 0, 292, 292, 282, 3, 94],
+    'Measurement2': [257, 387, 308, 206, 0, 270, 364, 149, 324, 164],
+    'Measurement3': [174, 47, 317, 278, 0, 47, 316, 274, 2, 0],
+    'Measurement4': [214, 157, 286, 188, 0, 288, 287, 319, 128, 0],
+    'Measurement5': [69, 0, 236, 43, 0, 324, 75, 213, 219, 0]
+}
+
+df = pd.DataFrame(data)
+
+# Melt the DataFrame for easier plotting
+df_melted = df.melt(id_vars=['Condition'], value_vars=['Measurement1', 'Measurement2', 'Measurement3', 'Measurement4', 'Measurement5'],
+                    var_name='Measurement', value_name='Height')
+
+# Remove zero values
+df_melted = df_melted[df_melted['Height'] > 0]
+
+# Plot Dot Plot
+plt.figure(figsize=(12, 6))
+for condition in df_melted['Condition'].unique():
+    subset = df_melted[df_melted['Condition'] == condition]
+    plt.plot(subset['Height'], [condition]*len(subset), 'o', label=condition)
+
+plt.title('Dot Plot of Plant Growth')
+plt.xlabel('Height (cm)')
+plt.ylabel('Condition')
+plt.grid(axis='x', linestyle='--', alpha=0.7)
+plt.legend()
+plt.show()
+
+# Plot Histogram with Enhanced Details
+plt.figure(figsize=(12, 6))
+bins = range(0, 400, 50)  # Define bins range for better clarity
+
+for condition in df_melted['Condition'].unique():
+    subset = df_melted[df_melted['Condition'] == condition]
+    plt.hist(subset['Height'], bins=bins, alpha=0.7, label=condition, edgecolor='black')
+
+plt.title('Histogram of Plant Growth with and without Music')
+plt.xlabel('Height (cm)')
+plt.ylabel('Frequency')
+plt.legend(title='Condition')
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
